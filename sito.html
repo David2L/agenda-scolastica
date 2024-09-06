@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Scolastica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f1e9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #8b6f47;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            color: #fff;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #8b6f47;
+        }
+        section {
+            padding: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .countdown {
+            font-size: 2em;
+            margin: 20px 0;
+            color: #8b6f47;
+        }
+        .calendar iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+        .chatbox, .files, .tasks {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .tasks input, .chatbox input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Agenda Scolastica</h1>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#chat">Chat</a>
+    <a href="#calendario">Calendario</a>
+    <a href="#countdown">Countdown</a>
+    <a href="#compiti">Agenda Compiti</a>
+    <a href="#file">File Condivisi</a>
+</nav>
+
+<section id="home">
+    <h2>Benvenuto nella tua Agenda Scolastica</h2>
+    <p>Qui puoi gestire i tuoi compiti, scambiare messaggi e file con i tuoi compagni, impostare eventi sul calendario e molto altro.</p>
+</section>
+
+<section id="chat">
+    <h2>Chat con i Compagni</h2>
+    <div class="chatbox">
+        <h3>Chat Room</h3>
+        <input type="text" id="message" placeholder="Scrivi il tuo messaggio...">
+        <button onclick="sendMessage()">Invia</button>
+        <div id="chat-log"></div>
+    </div>
+</section>
+
+<section id="calendario">
+    <h2>Calendario Condiviso</h2>
+    <div class="calendar">
+        <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_link&ctz=Europe/Rome"></iframe>
+    </div>
+</section>
+
+<section id="countdown">
+    <h2>Countdown</h2>
+    <div class="countdown" id="natale">Natale: <span id="countdownNatale"></span></div>
+    <div class="countdown" id="halloween">Halloween: <span id="countdownHalloween"></span></div>
+    <div class="countdown" id="pasqua">Pasqua: <span id="countdownPasqua"></span></div>
+    <div class="countdown" id="fineScuola">Fine della scuola: <span id="countdownFineScuola"></span></div>
+</section>
+
+<section id="compiti">
+    <h2>Agenda Compiti</h2>
+    <div class="tasks">
+        <input type="text" id="task" placeholder="Aggiungi un nuovo compito...">
+        <button onclick="addTask()">Aggiungi</button>
+        <ul id="task-list"></ul>
+    </div>
+</section>
+
+<section id="file">
+    <h2>File Condivisi</h2>
+    <div class="files">
+        <input type="file" id="fileInput">
+        <ul id="file-list"></ul>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Agenda Scolastica</p>
+</footer>
+
+<script>
+    // Countdown Script
+    function countdown(date, elementId) {
+        const targetDate = new Date(date).getTime();
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        document.getElementById(elementId).textContent = days + " giorni";
+    }
+
+    setInterval(function() {
+        countdown("December 25, 2024 00:00:00", "countdownNatale");
+        countdown("October 31, 2024 00:00:00", "countdownHalloween");
+        countdown("March 31, 2024 00:00:00", "countdownPasqua");
+        countdown("June 6, 2024 00:00:00", "countdownFineScuola");
+    }, 1000);
+
+    // Chat Script
+    function sendMessage() {
+        const message = document.getElementById('message').value;
+        const chatLog = document.getElementById('chat-log');
+        const newMessage = document.createElement('p');
+        newMessage.textContent = message;
+        chatLog.appendChild(newMessage);
+        document.getElementById('message').value = '';
+    }
+
+    // Task Script
+    function addTask() {
+        const task = document.getElementById('task').value;
+        const taskList = document.getElementById('task-list');
+        const newTask = document.createElement('li');
+        newTask.textContent = task;
+        taskList.appendChild(newTask);
+        document.getElementById('task').value = '';
+    }
+
+    // File Sharing Script
+    document.getElementById('fileInput').addEventListener('change', function() {
+        const fileList = document.getElementById('file-list');
+        const newFile = document.createElement('li');
+        newFile.textContent = this.files[0].name;
+        fileList.appendChild(newFile);
+    });
+</script>
+
+</body>
+</html>
